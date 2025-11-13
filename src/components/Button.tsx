@@ -11,7 +11,7 @@ type ButtonProps = {
 export default function Button({ label, onClick, className = '', style, active = false }: ButtonProps) {
     const base = 'px-6 py-3 text-2xl rounded-full font-medium transition-all duration-200'
     const activeStyles = 'bg-sky-300 text-slate-900 hover:bg-sky-400 hover:shadow-md cursor-default'
-    const inactiveStyles = 'bg-red-300 text-white cursor-not-allowed'
+    const inactiveStyles = 'bg-sky-200 text-slate-500 cursor-not-allowed'
 
     return (
         <button
