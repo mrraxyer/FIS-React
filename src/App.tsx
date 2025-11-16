@@ -7,7 +7,7 @@ export default function App() {
             {/* Left sidebar with buttons and separator*/}
             <div className="absolute left-6 top-0 bottom-0 w-36">
                 <Button label="Inicio" className="absolute top-8 left-0" active={true} buttonType="Inicio" />
-                <Button label="Fin" className="absolute bottom-8 left-0" active={false} buttonType="Fin" />
+                <Button label="Fin" className="absolute bottom-8 left-0" active={true} buttonType="Fin" />
             </div>
             <div className="absolute left-40 top-0 bottom-0 w-1 bg-black rounded" />
 
