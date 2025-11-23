@@ -3,7 +3,7 @@ import Button from './components/Button'
 import SpeedLimiter from './components/SpeedLimiter'
 import CarDisplay from './components/CarDisplay'
 
-type Vehicle = { id: string; color: string }
+type Vehicle = { id: string; plate: string; speed: number; color: string }
 const colors = ['text-red-600', 'text-blue-600', 'text-green-600', 'text-yellow-600', 'text-purple-600', 'text-orange-600']
 
 export default function App() {
@@ -27,10 +27,23 @@ export default function App() {
         if (auto) alert('Simulación finalizada automáticamente (>=60s).')
     }
 
+    const genPlate = () => {
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        const code = Array.from({ length: 3 }, () => letters[Math.floor(Math.random() * letters.length)]).join('')
+        return `GT-${code}`
+    }
+
+    const genSpeed = () => Math.floor(20 + Math.random() * 101) // 20-120 km/h
+
     const generateVehicle = () => {
         carCountRef.current += 1
         const nextColor = colors[carCountRef.current % colors.length]
-        const v: Vehicle = { id: `c${carCountRef.current}`, color: nextColor }
+        const v: Vehicle = {
+            id: `c${carCountRef.current}`,
+            plate: genPlate(),
+            speed: genSpeed(),
+            color: nextColor
+        }
         setVehicles(prev => [...prev, v])
         setCurrent(v)
     }
@@ -108,7 +121,7 @@ export default function App() {
                 <div className="absolute top-6 left-6">
                     <SpeedLimiter />
                 </div>
-                {running && current && <CarDisplay color={current.color} />}
+                {running && current && <CarDisplay color={current.color} plate={current.plate} />}
                 {/* Simple status & table */}
                 <div className="absolute top-8 left-72 text-slate-800 text-lg">
                     <div className="font-semibold">Tiempo: {elapsed}s</div>
@@ -117,13 +130,15 @@ export default function App() {
                     <table className="text-lg">
                         <thead>
                             <tr className="bg-slate-200">
-                                <th className="px-4 py-2">Coche</th>
+                                <th className="px-4 py-2">Placa</th>
+                                <th className="px-4 py-2">Velocidad</th>
                             </tr>
                         </thead>
                         <tbody>
                             {vehicles.map(v => (
                                 <tr key={v.id} className="odd:bg-white even:bg-slate-100">
-                                    <td className="px-4 py-2">{v.id}</td>
+                                    <td className="px-4 py-2">{v.plate}</td>
+                                    <td className="px-4 py-2">{v.speed} km/h</td>
                                 </tr>
                             ))}
                         </tbody>
