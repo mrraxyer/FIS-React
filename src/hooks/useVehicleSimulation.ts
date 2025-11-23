@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 
-type Vehicle = { id: string; plate: string; speed: number; color: string }
+type Vehicle = { id: string; plate: string; speed: number; color: string; points: number }
 
 const colors = ['text-red-600', 'text-blue-600', 'text-green-600', 'text-yellow-600', 'text-purple-600', 'text-orange-600']
+const SPEED_LIMIT = 60
 
 export function useVehicleSimulation() {
     const [running, setRunning] = useState(false)
@@ -29,11 +30,14 @@ export function useVehicleSimulation() {
     const generateVehicle = () => {
         carCountRef.current += 1
         const nextColor = colors[carCountRef.current % colors.length]
+        const speed = genSpeed()
+        const points = speed <= SPEED_LIMIT ? 10 : 0
         const v: Vehicle = {
             id: `c${carCountRef.current}`,
             plate: genPlate(),
-            speed: genSpeed(),
-            color: nextColor
+            speed,
+            color: nextColor,
+            points
         }
         setVehicles(prev => [...prev, v])
         setCurrent(v)
