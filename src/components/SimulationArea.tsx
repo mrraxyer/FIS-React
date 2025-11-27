@@ -27,7 +27,7 @@ export default function SimulationArea({ running, elapsed, current, vehicles }: 
 
             {/* Status display */}
             <div className="absolute top-8 left-72 text-slate-800 text-lg">
-                <div className="font-semibold">Tiempo: {elapsed}s</div>
+                <div className="font-semibold">Tiempo: {Math.min(elapsed, 60)}s</div>
             </div>
 
             {/* Vehicle table */}
@@ -46,7 +46,7 @@ export default function SimulationArea({ running, elapsed, current, vehicles }: 
                                 <td className="px-4 py-2">{v.plate}</td>
                                 <td className="px-4 py-2">{v.speed} km/h</td>
                                 <td className={`px-4 py-2 font-semibold ${v.points > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                    {v.points}
+                                    {v.points === 0 ? 'No' : 'Si'}
                                 </td>
                             </tr>
                         ))}
